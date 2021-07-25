@@ -1,0 +1,39 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.18.0/inter.css");
+
+body {
+    font-family: 'Inter';
+    background-color: #111;
+    color: #fff;
+    width: 100%;
+    display: table;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    margin: 0;
+    text-align: center;
+}
+
+.container {
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.h-captcha {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.title img {
+    width: 10vh;
+    height: 10vh;
+}

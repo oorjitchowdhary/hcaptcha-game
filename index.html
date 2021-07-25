@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Surprise | TS 2021</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://hcaptcha.com/1/api.js" async defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="title">
+        <img src="ts.png" />
+        <h1>Surprise</h1>
+      </div>
+      <p id="final-score"></p>
+      <p id="current-score"></p>
+      <div
+        id="captcha"
+        class="h-captcha"
+        data-sitekey="0e700dc9-a0c8-4ee7-9dc1-0b55ade6d56d"
+        data-open-callback="startCaptcha"
+        data-close-callback="dismissCaptcha"
+        data-callback="successCaptcha"
+        data-theme="dark"
+      ></div>
+    </div>
+    <script>
+      const captcha = document.getElementById("captcha");
+      const finalScore = document.getElementById("final-score");
+      const currentScore = document.getElementById("current-score");
+      let isCaptchaStarted = false;
+      localStorage.setItem(
+        "solvedCaptchas",
+        localStorage.getItem("solvedCaptchas") || "0"
+      );
+
+      finalScore.innerHTML = `Your highest streak is ${
+        localStorage.getItem("finalScore") || "0"
+      } points.`;
+      currentScore.innerHTML = `Your current streak is ${
+        localStorage.getItem("solvedCaptchas") || "0"
+      } points.`;
+
+      const startCaptcha = () => {
+        if (isCaptchaStarted) {
+          console.log(
+            `Your final score is ${localStorage.getItem("solvedCaptchas")}`
+          );
+
+          const currentScore = localStorage.getItem("solvedCaptchas");
+          const highestScore = localStorage.getItem("finalScore") || '0';
+          let scoreToSet;
+          if (parseInt(currentScore) > parseInt(highestScore)) {
+            scoreToSet = currentScore;
+          } else {
+            scoreToSet = highestScore;
+          }
+          localStorage.setItem(
+            "finalScore",
+            String(scoreToSet)
+          );
+          localStorage.setItem("solvedCaptchas", "0");
+          window.location.reload();
+        } else {
+          isCaptchaStarted = true;
+        }
+      };
+      const dismissCaptcha = () => console.log("Captcha dismissed");
+      const successCaptcha = () => {
+        let solvedCaptchas = localStorage.getItem("solvedCaptchas");
+        solvedCaptchas = parseInt(solvedCaptchas) + 1;
+        localStorage.setItem("solvedCaptchas", String(solvedCaptchas));
+        window.location.reload();
+        console.log(
+          `Your current score is ${localStorage.getItem("solvedCaptchas")}`
+        );
+      };
+
+      window.startCaptcha = startCaptcha;
+      window.dismissCaptcha = dismissCaptcha;
+      window.successCaptcha = successCaptcha;
+    </script>
+  </body>
+</html>
